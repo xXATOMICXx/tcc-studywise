@@ -113,6 +113,56 @@
             font-size: 60px;
         }
 
+        .gerar_com_ia textarea {
+            width: 80%;
+            height: 120px;
+            display: block;
+            margin: 20px auto;
+            padding: 20px;
+            background: #111a3d;
+            color: white;
+            border: 2px solid #8B5CF6;
+            border-radius: 20px;
+            font-size: 18px;
+            font-family: Verdana, sans-serif;
+            resize: none;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .gerar_com_ia textarea:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+
+        .gerar_com_ia h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .botao {
+            width: 220px;
+            margin: 20px auto;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 15px;
+            text-align: center;
+            
+            padding: 15px;
+
+            border-radius: 15px;
+
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .botao:hover {
+            background: #4f0080;
+        }
+
     </style>
 </head>
 <body>
@@ -142,7 +192,7 @@
             <p>Cursos prontos de diferentes matérias com vídeos, textos e exercícios.</p>
         </div>
 
-        <div class="cartao">
+        <div class="cartao" id="cartao_IA">
             <div class="icone">🤖</div>
             <h2>Gerar com IA</h2>
             <p>Envie qualquer texto ou arquivo e a IA irá fazer resumos, quiz, flashcards e muito mais.</p>
@@ -160,6 +210,19 @@
             <p>Extraia textos de fotos automaticamente.</p>
         </div>
 
+    </section>
+
+    <section class="gerar_com_ia" id="gerar" style="display:none; padding:40px;">
+
+        <h1>🤖 Gerar com IA</h1>
+    
+        <textarea placeholder="Digite o conteúdo que deseja estudar...">
+        </textarea>
+
+        <div class="botao">
+            <h2>Gerar material</h2>
+        </div>
+    
     </section>
 
     <script src="script.js"></script>
