@@ -5,11 +5,20 @@ const cartoes = document.getElementById("cartoes");
 const telaGerar = document.getElementById("gerar");
 const botaoGerar = document.querySelector(".botao");
 const textarea = document.querySelector(".gerar_com_ia textarea");
+const cartaoTrilhas = document.querySelector("#cartoes .cartao:first-child");
+const cartaoMaterias = document.getElementById("cartao_materias");
 
 cartaoIA.addEventListener("click", () => {
     conteudo.style.display = "none";
     cartoes.style.display = "none";
     telaGerar.style.display = "block";
+});
+
+cartaoTrilhas.addEventListener("click", () => {
+    conteudo.style.display = "none";
+    cartoes.style.display = "none";
+    telaGerar.style.display = "none";
+    cartaoMaterias.style.display = "flex";
 });
 
 inicio.forEach(item => {
@@ -18,6 +27,7 @@ inicio.forEach(item => {
         conteudo.style.display = "block";
         cartoes.style.display = "flex";
         telaGerar.style.display = "none";
+         cartaoMaterias.style.display = "none";
     });
 });
 
