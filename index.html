@@ -94,7 +94,6 @@
         }
 
         .cartao h2 {
-            margin-top: 20px;
             margin-bottom: 15px;
         }
 
@@ -162,6 +161,36 @@
         .botao:hover {
             background: #4f0080;
         }
+
+        .materias {
+            display: none;
+            justify-content: center;
+            align-items: stretch;
+            gap: 30px;
+            padding: 40px;
+            flex-wrap: wrap;
+        }
+
+        .materias h1 {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 40px;
+        }
+
+        .materias .cartao {
+            width: 200px;
+            height: 220px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+
+            text-align: center;
+        }
+
         #resultado_ia {
     width: 80%;
     margin: 30px auto;
@@ -250,7 +279,10 @@
     
     </section>
     
-    <section class="trilhas de estudo">
+    <section class="materias" id="cartao_materias">
+
+        <h1>📒 Trilhas de Estudo</h1>
+
         <div class="cartao">
             <div class="icone">📝</div>
             <h2>Português</h2>
@@ -268,7 +300,42 @@
 
         <div class="cartao">
             <div class="icone">⛈️</div>
-            <h2>Química</h2>
+            <h2>Física</h2>
+        </div>
+
+        <div class="cartao">
+            <div class="icone">🧫</div>
+            <h2>Biologia</h2>
+        </div>
+
+        <div class="cartao">
+            <div class="icone">📜</div>
+            <h2>História</h2>
+        </div>
+
+        <div class="cartao">
+            <div class="icone">🌍</div>
+            <h2>Geografia</h2>
+        </div>
+
+        <div class="cartao">
+            <div class="icone">💭</div>
+            <h2>Filosofia</h2>
+        </div>
+
+        <div class="cartao">
+            <div class="icone">📊</div>
+            <h2>Sociologia</h2>
+        </div>
+
+        <div class="cartao">
+            <div class="icone">🎭</div>
+            <h2>Artes</h2>
+        </div>
+
+        <div class="cartao">
+            <div class="icone">🗽</div>
+            <h2>Inglês</h2>
         </div>
 
     </section>
