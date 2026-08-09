@@ -12,6 +12,7 @@ cartaoIA.addEventListener("click", () => {
     conteudo.style.display = "none";
     cartoes.style.display = "none";
     telaGerar.style.display = "block";
+    cartaoMaterias.style.display = "none";
 });
 
 cartaoTrilhas.addEventListener("click", () => {
@@ -19,6 +20,7 @@ cartaoTrilhas.addEventListener("click", () => {
     cartoes.style.display = "none";
     telaGerar.style.display = "none";
     cartaoMaterias.style.display = "flex";
+    carregarProgresso();
 });
 
 inicio.forEach(item => {
@@ -27,7 +29,7 @@ inicio.forEach(item => {
         conteudo.style.display = "block";
         cartoes.style.display = "flex";
         telaGerar.style.display = "none";
-         cartaoMaterias.style.display = "none";
+        cartaoMaterias.style.display = "none";
     });
 });
 
@@ -67,3 +69,38 @@ botaoGerar.addEventListener("click", () => {
         </p>
     `;
 });
+
+// Busca o progresso das matérias na API
+function carregarProgresso() {
+    fetch("http://localhost:3000/api/progresso")
+        .then(res => {
+            if (!res.ok) throw new Error("Erro na requisição");
+            return res.json();
+        })
+        .then(dados => {
+            console.log("Progresso carregado:", dados);
+        })
+        .catch(erro => console.error("Erro ao carregar progresso:", erro));
+}
+
+// Salva o progresso de uma matéria
+function atualizarProgresso(materia, porcentagem) {
+    fetch("http://localhost:3000/api/progresso", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            materia: materia,
+            progresso: porcentagem
+        })
+    })
+    .then(res => {
+        if (!res.ok) throw new Error("Erro ao salvar progresso");
+        return res.json();
+    })
+    .then(dados => {
+        console.log("Progresso salvo com sucesso:", dados);
+    })
+    .catch(erro => console.error("Erro ao atualizar progresso:", erro));
+}
