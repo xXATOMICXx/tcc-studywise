@@ -1,0 +1,292 @@
+*{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body {
+        background: #070c21;
+        color: white;
+        font-family: Verdana, sans-serif;
+    }
+
+    header {
+        display: flex;
+        justify-content:space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background: #180624;
+        border-bottom:1px solid #334155;
+    }
+
+    .logo {
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .azul {
+        color: blue;
+    }
+
+    .amarelo {
+        color: #dfdf00;
+    }
+
+    .menu {
+        display: flex;
+        gap: 40px;
+        font-size: 20px;
+    }
+
+    .menu div {
+        padding: 10px 15px;
+        border-radius: 10px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .menu div:hover {
+        background: #4f0080;
+    }
+
+    .destaque {
+        text-align: center;
+        margin-top: 100px;
+    }
+
+    .destaque h1 {
+        font-size: 70px;
+    }
+
+    .destaque p {
+        margin-top: 15px;
+        font-size: 25px;
+    }
+
+    .cartoes {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        gap: 30px;
+        margin-top: 50px;
+        flex-wrap: nowrap;
+    }
+
+    .cartao {
+        width: 280px;
+        height: 300px;
+        background: #111a3d;
+        padding: 20px 40px;
+        border-radius: 20px;
+        border:1px solid #334155;
+        border-top:5px solid #8B5CF6;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .cartao h2 {
+        margin-bottom: 15px;
+    }
+
+    .cartao p {
+        line-height: 1.5;
+    }
+
+    .cartao:hover {
+        transform: translateY(-5px) scale(1.02);
+        border:1px solid #8B5CF6;
+        border-top:5px solid #8B5CF6;
+        box-shadow:0 0 20px #8a5cf566;
+    }
+
+    .icone {
+        font-size: 60px;
+    }
+
+    .gerar_com_ia textarea {
+        width: 80%;
+        height: 120px;
+        display: block;
+        margin: 20px auto;
+        padding: 20px;
+        background: #111a3d;
+        color: white;
+        border: 2px solid #8B5CF6;
+        border-radius: 20px;
+        font-size: 18px;
+        font-family: Verdana, sans-serif;
+        resize: none;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .gerar_com_ia textarea:focus {
+        border-color: #a78bfa;
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    }
+
+    .gerar_com_ia h1 {
+        text-align: center;
+        margin-bottom: 50px;
+        font-size: 40px;
+    }
+
+    .botao {
+        width: 220px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+        text-align: center;
+        padding: 15px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .botao:hover {
+        background: #4f0080;
+    }
+
+    #cartao_materias {
+        display: none;
+        gap: 25px 250px;
+        padding: 40px 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    #cartao_materias.ativa,
+    #cartao_materias[style*="display: flex"],
+    #cartao_materias[style*="display: block"] {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        justify-content: center;
+        position: relative;
+    }
+
+    #cartao_materias.ativa::before,
+    #cartao_materias[style*="display: flex"]::before,
+    #cartao_materias[style*="display: block"]::before {
+        content: "";
+        position: absolute;
+        top: 150px;
+        bottom: 47px;
+        left: 50%;
+        width: 3px;
+        background:#334155;
+        transform: translateX(-50%);
+    }
+
+    #cartao_materias h1 {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 40px;
+    }
+
+    .materia-grupo {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .materias .cartao {
+        width: 180px;
+        height: 180px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .cartao-progresso {
+        flex: 1;
+        width: 300px;
+        height: 180px;
+        background: #111a3d;
+        border: 1px solid #334155;
+        border-top: 5px solid #22c55e;
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    .cartao-progresso:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+    }
+
+    .cartao-progresso h3 {
+        font-size: 16px;
+        color: #a78bfa;
+    }
+
+    .cartao-progresso .progresso-porcentagem {
+        font-size: 32px;
+        font-weight: bold;
+        color: #22c55e;
+    }
+
+    .cartao-progresso .barra-fundo {
+        width: 100%;
+        height: 8px;
+        background-color: #334155;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .cartao-progresso .barra-preenchimento {
+        height: 100%;
+        background-color: #22c55e;
+        border-radius: 10px;
+        transition: width 0.3s ease;
+    }
+
+    @media (max-width: 900px) {
+        #cartao_materias.ativa,
+        #cartao_materias[style*="display: flex"],
+        #cartao_materias[style*="display: block"] {
+            grid-template-columns: 1fr !important;
+        }
+    }
+
+    #resultado_ia {
+        width: 80%;
+        margin: 30px auto;
+        padding: 25px;
+        background: #111a3d;
+        border: 1px solid #8B5CF6;
+        border-radius: 20px;
+        line-height: 1.6;
+    }
+
+    #resultado_ia h2 {
+        color: #dfdf00;
+        margin-bottom: 20px;
+    }
+
+    #resultado_ia h3 {
+        color: #8B5CF6;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .aviso_mvp {
+        margin-top: 20px;
+        color: #a78bfa;
+        font-style: italic;
+    }
