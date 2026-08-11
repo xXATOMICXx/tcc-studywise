@@ -70,7 +70,6 @@ botaoGerar.addEventListener("click", () => {
     `;
 });
 
-// Busca o progresso das matérias na API
 function carregarProgresso() {
     fetch("http://localhost:3000/api/progresso")
         .then(res => {
@@ -83,7 +82,6 @@ function carregarProgresso() {
         .catch(erro => console.error("Erro ao carregar progresso:", erro));
 }
 
-// Salva o progresso de uma matéria
 function atualizarProgresso(materia, porcentagem) {
     fetch("http://localhost:3000/api/progresso", {
         method: "POST",
@@ -103,4 +101,71 @@ function atualizarProgresso(materia, porcentagem) {
         console.log("Progresso salvo com sucesso:", dados);
     })
     .catch(erro => console.error("Erro ao atualizar progresso:", erro));
+}
+
+async function cadastrarUsuario(nome, email, senha){
+    try{
+        const resposta = await fetch("https://localhost:3000/api/cadastro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({nome, email, senha})
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok){
+            alert(dados.erro || "Erro ao cadastrar");
+            return null;
+        }
+
+        alert("Cadastrado com sucesso!");
+        return dados;
+    }catch(erro){
+        console.error("Erro no cadastro:", erro);
+        alert("Erro de conexão com o servidor");
+        return null;
+    }
+}
+
+async function loginUsuario(email,senha){
+    try{
+        const resposta = await fetch("http://localhost:3000/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({email, senha})
+        });
+        
+        const dados = await resposta.json();
+
+        if (!resposta.ok){
+            alert(dados.erro || "Email ou senha incorretos");
+            return null;
+        }
+
+        localStorage.setItem("token", dados.token);
+        localStorage.setItem("usuario", JSON.stringify(dados.usuario));
+
+        alert("Login realizado com sucesso!");
+        return dados;
+
+    }catch(erro){
+        console.error("Erro no login:", erro);
+        alert("Erro de conexão com o servidor");
+        return null;
+    }
+}
+
+function usuarioLogado(){
+    const token = localStorage.getItem("token");
+    return token ? true : false;
+}
+
+function logout(){
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    alert("Você saiu da conta");
 }
