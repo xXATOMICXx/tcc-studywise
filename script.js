@@ -23,6 +23,7 @@ inicio.forEach(item => {
 
 botaoGerar.addEventListener("click", () => {
     const texto = textarea.value.trim();
+    console.log(texto);
 
     if (texto === "") {
         alert("Digite um conteúdo primeiro para a IA gerar o material.");
