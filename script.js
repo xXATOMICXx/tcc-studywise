@@ -312,3 +312,58 @@ if (botaoCadastro) {
         if (e.key === "Enter") botaoCadastro.click();
     });
 }
+
+// ===================== LÓGICA DA TELA DE VERIFICAÇÃO =====================
+const email = localStorage.getItem("email_pendente");
+const botao = document.getElementById("botao-verificar");
+const inputCodigo = document.getElementById("codigo");
+
+if (!email) {
+    mensagemErro.textContent = "Nenhum email pendente de verificação.";
+    mensagemErro.style.display = "block";
+}
+
+botao.addEventListener("click", async () => {
+    const codigo = inputCodigo.value.trim();
+
+    mensagemErro.style.display = "none";
+    mensagemSucesso.style.display = "none";
+
+    if (!codigo || codigo.lenght !==6) {
+        mensagemErro.textContent = "Digite o código de 6 dígitos    ",
+        mensagemErro.style.display = "block";
+        return;
+    }
+
+    botao.textContent = "Verificando...";
+    botao.disabled = true;
+
+    try {
+        const res = await fetch("http://localhost:3000/api/verificar-codigo", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({email, codigo})
+        });
+
+        const dados = await res.json();
+
+        if (!res.ok) {
+            mensagemErro.textContent = dados.erro || "Código inválido";
+            mensagemErro.style.display = "block";
+        } else {
+            localStorage.removeItem("email_pendente");
+            mensagemSucesso.textContent = dados.mensagem;
+            mensagemSucesso.style.display = "block";
+
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1500);
+        }
+    } catch (e) {
+        mensagemErro.textContent = "Erro de conexão com o servidor";
+        mensagemErro.style.display = "block";
+    }
+
+    botao.textContent = "Verificar";
+    botao.disabled = false;
+});
