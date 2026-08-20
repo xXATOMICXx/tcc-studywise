@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 });
 
 async function enviarCodigoVerificacao(email, codigo) {
-    await transformer.sendMail({
+    await transporter.sendMail({
         from: `"StudyWise" <${process.env.EMAIL_USER}>`,
         to: email,
         subject: "Seu código de verificação - StudyWise",
