@@ -154,14 +154,6 @@ app.post("/api/cadastro", async (req, res) => {
             email
         });
 
-        const usuario = resultado.rows[0];
-
-        const token = jwt.sign(
-            { id: usuario.id, email: usuario.email },
-            process.env.JWT_SECRET,
-            { expiresIn: "7d" }
-        );
-
     } catch (erro) {
         console.error("Erro no cadastro:", erro);
         res.status(500).json({ erro: "Erro ao cadastrar usuário" });
