@@ -1,3 +1,4 @@
+const {enviarCodigoVerificacao} = require("./email");
 const express = require("express");
 const cors = require("cors");
 const pool = require("./db");
@@ -168,8 +169,6 @@ app.post("/api/cadastro", async (req, res) => {
 });
 
 // ===================== VERIFICAR EMAIL DO CADASTRO =====================
-const {enviarCodigoVerificacao} = require("./email");
-
 app.post("/api/verificar-codigo", async (req, res) => {
     const {email, codigo} = req.body;
 
@@ -185,7 +184,7 @@ app.post("/api/verificar-codigo", async (req, res) => {
             [email]
         );
 
-        if (resultado.rows.lenght === 0) {
+        if (resultado.rows.length === 0) {
             return res.status(404).json({ erro: "Usuário não encontrado"});
         }
 
@@ -195,7 +194,7 @@ app.post("/api/verificar-codigo", async (req, res) => {
             return res.json({ mensagem: "Email já verificado"});
         }
 
-        if (!usario.codigo_verificacao || usuario.codigo_verificacao !== codigo) {
+        if (!usuario.codigo_verificacao || usuario.codigo_verificacao !== codigo) {
             return res.status(400).json({ erro: "Código inválido"});
         }
 
