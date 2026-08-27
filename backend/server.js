@@ -1,8 +1,10 @@
+require("dotenv").config();
+const { OAuth2Client } = require("google-auth-library");
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const {enviarCodigoVerificacao} = require("./email");
 const express = require("express");
 const cors = require("cors");
 const pool = require("./db");
-require("dotenv").config();
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -161,6 +163,7 @@ app.post("/api/cadastro", async (req, res) => {
 });
 
 // ===================== VERIFICAR EMAIL DO CADASTRO =====================
+
 app.post("/api/verificar-codigo", async (req, res) => {
     const {email, codigo} = req.body;
 
@@ -262,6 +265,74 @@ app.post("/api/login", async (req, res) => {
     } catch (erro) {
         console.error("Erro no login:", erro);
         res.status(500).json({ erro: "Erro ao fazer login" });
+    }
+});
+
+// ===================== LOGIN GOOGLE OAUTH ===================
+app.post("/api/auth/google", async (req, res) => {
+    const {credential} = req.body;
+
+    if (!credential) {
+        return res.status(400).json({ erro: "Token do Google não enviado"});
+    }
+
+    try {
+        const ticket = await googleClient.verifyIdToken({
+            idToken: credential,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+
+        const payload = ticket.getPayload();
+        const googleId = payload.sub;
+        const email = payload.email;
+        const nome = payload.name;
+
+        const resultado = await pool.query(
+            "SELECT * FROM usuarios WHERE email = $1 OR google_id = $2",
+            [email, googleId]
+        );
+
+        let usuario;
+
+        if (resultado.rows.length === 0){
+            const inserido = await pool.query(
+                `INSERT INTO usuarios (nome, email, google_id, email_verificado, senha)
+                VALUES ($1, $2, $3, TRUE, NULL)
+                RETURNING id, nome, email`,
+                [nome, email, googleId]
+            );
+            usuario = inserido.rows[0];
+        } else {
+            usuario = resultado.rows[0];
+
+            if (!usuario.google_id) {
+                await pool.query(
+                    `UPDATE usuarios
+                    SET google_id = $1, email_verificado = TRUE
+                    WHERE id = $2`,
+                    [googleId, usuario.id]
+                );
+            }
+        }
+
+        const token = jwt.sign(
+            {id: usuario.id, email: usuario.email},
+            process.env.JWT_SECRET,
+            {expiresIn: "7d"}
+        );
+
+        res.json({
+            mensagem: "Login com Google realizado!",
+            token,
+            usuario: {
+                id: usuario.id,
+                nome: usuario.nome,
+                email: usuario.email
+            }
+        });
+    } catch (erro) {
+        console.error("Erro no Google Auth:", erro);
+        res.status(401).json({erro: "Falha na autenticação Google"});
     }
 });
 
