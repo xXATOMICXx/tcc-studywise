@@ -381,3 +381,50 @@ if (botaoVerificar) {
         botaoVerificar.disabled = false;
     });
 }
+
+// ===================== LÓGICA DO GOOGLE OAUTH =====================
+function iniciarGoogleLogin() {
+    if (typeof google === "undefined") return;
+
+    google.accounts.id.initialize({
+        client_id: "864943321596-pt616t5p40vta9f8m6769bvniklsrhkb.apps.googleusercontent.com",
+        callback: handleGoogleCredential
+    });
+
+    const botaoDiv = document.getElementById("google-btn");
+    if (botaoDiv) {
+        google.accounts.id.renderButton(botaoDiv, {
+            theme: "outline",
+            size: "large",
+            text: "continue_width",
+            shape: "rectangular",
+            width: 320
+        });
+    }
+}
+
+async function handleGoogleCredential(response) {
+    try {
+        const res = await fetch("http://localhost:3000/api/auth/google", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({credential: response.credential})
+        });
+
+        const dados = await res.json();
+
+        if (!res.ok) {
+            alert(dados.erro || "Erro no login Google");
+            return;
+        }
+
+        localStorage.setItem("token", dados.token);
+        localStorage.setItem("usuario", JSON.stringify(dados.usuario));
+        window.location.href = "index.html";
+    } catch(e) {
+        console.error(e);
+        alert("Erro de conexão com o servidor");
+    }
+}
+
+window.addEventListener("load", iniciarGoogleLogin);
